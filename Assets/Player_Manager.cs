@@ -21,7 +21,10 @@ public class Player_Manager : MonoBehaviour
     [SerializeField]
     private GameObject positionLeft, positionRight;
     [SerializeField]
-    private GameObject prefab; 
+    private GameObject prefab;
+
+    public List<GameObject> bullets_Container = new List<GameObject>();
+    public int amount = 10;
 
     private void Awake()
     {
@@ -32,6 +35,13 @@ public class Player_Manager : MonoBehaviour
         move = playerInput.actions["Movement"];
         shoot = playerInput.actions["Shoot"];
         //shootRight = playerInput.actions["RightClick"];
+
+        for (int i = 0; i <= amount; i++) //este lo realiza por la cantidad de balas, -intancia objeto-lo desactiva-lo agrega a la lista
+        {
+            var prefabInstance = Instantiate(prefab);
+            prefabInstance.SetActive(false);
+            bullets_Container.Add(prefabInstance);
+        }
     }
 
     private void OnEnable()
@@ -76,4 +86,26 @@ public class Player_Manager : MonoBehaviour
         }
 
     }
+
+    public GameObject getNewBullet() //esta funcion es para darle un objeto desactivado al input y que este lo active
+    {
+        if (amount > 0)
+        {
+            for (int i = 0; i <= amount; i++)
+            {
+                if (!bullets_Container[i].activeInHierarchy) //comienza el conteo, si no esta activo, lo manda al input pasando por todos los objetos
+                {
+                    return bullets_Container[i];
+                }
+            }
+        }
+        if (amount <= 0)
+        {
+
+            //animator.SetBool("reload", true);
+            Debug.Log("reload anim");
+        }
+        return null;
+    }
+
 }
