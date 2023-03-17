@@ -23,8 +23,7 @@ public class Player_Manager : MonoBehaviour
     [SerializeField]
     private GameObject prefab;
 
-    public List<GameObject> bullets_Container = new List<GameObject>();
-    public int amount = 10;
+    public Vector3 tempVector; 
 
     private void Awake()
     {
@@ -36,12 +35,6 @@ public class Player_Manager : MonoBehaviour
         shoot = playerInput.actions["Shoot"];
         //shootRight = playerInput.actions["RightClick"];
 
-        for (int i = 0; i <= amount; i++) //este lo realiza por la cantidad de balas, -intancia objeto-lo desactiva-lo agrega a la lista
-        {
-            var prefabInstance = Instantiate(prefab);
-            prefabInstance.SetActive(false);
-            bullets_Container.Add(prefabInstance);
-        }
     }
 
     private void OnEnable()
@@ -54,8 +47,14 @@ public class Player_Manager : MonoBehaviour
 
     private void OnDisable()
     {
+        move.performed -= Movement;
+        shoot.performed -= ShootAction;
 
+    }
 
+    private void FixedUpdate()
+    {
+        rg.AddForce(tempVector * speedMovement * Time.deltaTime); 
     }
 
     public void Movement(InputAction.CallbackContext context)
@@ -63,49 +62,28 @@ public class Player_Manager : MonoBehaviour
         //Debug.Log(context.ReadValue<Vector3>());
         if(context.ReadValue<Vector3>() == Vector3.up)
         {
-            //Debug.Log("enter"); 
-            rg.velocity = Vector3.up * jumpForce * 5 * Time.deltaTime; 
+            Debug.Log("enter"); 
+            rg.AddForce( Vector3.up * jumpForce); 
         }
-        rg.AddForce(context.ReadValue<Vector3>() * speedMovement * 5 * Time.deltaTime, ForceMode.Force);
+        tempVector = context.ReadValue<Vector3>();
     }
 
 
 
     public void ShootAction(InputAction.CallbackContext context)
     {
-        Debug.Log(context + " contexto");
+        //Debug.Log(context + " contexto");
         if(context.ReadValue<float>() >= 1)
         {
             Debug.Log("enter right");
-            Instantiate(prefab, positionRight.transform);
+            Instantiate(prefab, positionRight.transform.position, positionRight.transform.rotation);
         }
         if (context.ReadValue<float>() <= -1)
         {
             Debug.Log("enter left");
-            Instantiate(prefab, positionLeft.transform);
+            Instantiate(prefab, positionLeft.transform.position, positionLeft.transform.rotation);
         }
 
-    }
-
-    public GameObject getNewBullet() //esta funcion es para darle un objeto desactivado al input y que este lo active
-    {
-        if (amount > 0)
-        {
-            for (int i = 0; i <= amount; i++)
-            {
-                if (!bullets_Container[i].activeInHierarchy) //comienza el conteo, si no esta activo, lo manda al input pasando por todos los objetos
-                {
-                    return bullets_Container[i];
-                }
-            }
-        }
-        if (amount <= 0)
-        {
-
-            //animator.SetBool("reload", true);
-            Debug.Log("reload anim");
-        }
-        return null;
     }
 
 }

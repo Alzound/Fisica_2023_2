@@ -17,14 +17,15 @@ public class bullet : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        rg.AddForce(transform.position * 5 * 1000 * Time.deltaTime, ForceMode.Impulse);
+        rg.AddForce(transform.forward * explosionForce, ForceMode.Impulse);
         StartCoroutine(Deactivate());
         //rg.AddExplosionForce(explosionForce, transform.forward, explosionRadius); 
     }
 
     private IEnumerator Deactivate()
     {
-        this.transform.gameObject.SetActive(false); 
-        yield return new WaitForSeconds(5); 
+        
+        yield return new WaitForSeconds(5);
+        this.transform.gameObject.SetActive(false);
     }
 }
