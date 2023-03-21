@@ -34,7 +34,6 @@ public class Player_Manager : MonoBehaviour
         move = playerInput.actions["Movement"];
         shoot = playerInput.actions["Shoot"];
         //shootRight = playerInput.actions["RightClick"];
-
     }
 
     private void OnEnable()
@@ -42,14 +41,12 @@ public class Player_Manager : MonoBehaviour
         move.performed += Movement;
         shoot.performed += ShootAction;
         //shootRight.performed += RightClickAction;
-
     }
 
     private void OnDisable()
     {
         move.performed -= Movement;
         shoot.performed -= ShootAction;
-
     }
 
     private void FixedUpdate()

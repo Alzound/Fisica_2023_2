@@ -1,14 +1,11 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
-public class enemie : Steering
+public class Wander : Steering
 {
-    [Header("Wander")]
-    public float circleDistance;
-    public float circleRadius;
+    public float circleDistance = 1;
+    public float circleRadius = .5f;
     public float[] targetChange = new float[] { 1f, 10f };
     public float[] targetSpace = new[] { 8f, 5f };
     public float[] angleChange = new[] { 1f, 20f };
@@ -18,26 +15,6 @@ public class enemie : Steering
     private bool _startRandom = true;
     private float _rotationAngle = 10f;
     private Seek _seek;
-
-
-    [Header("Bullet")]
-    [SerializeField]
-    private bool isReady = true; 
-    private Rigidbody rg;
-    [SerializeField]
-    private GameObject left, right, prefab; 
-    private enum SteringType
-    {
-        Seek, RunAway, Wander
-    }
-
-    [SerializeField]
-    private SteringType _type = SteringType.Seek;
-    private Dictionary<string, Action> _actions = new Dictionary<string, Action>();
-    private Vector3 steering;
-
-
-    
 
     private void Start()
     {
@@ -58,35 +35,30 @@ public class enemie : Steering
         {
             DrawVectors();
         }
-
-
         return wanderforce;
-
-
     }
-
+    
     IEnumerator RandomTarget()
     {
-        while (_startRandom)
+        while(_startRandom)
         {
-            Vector3 randomTarget = new Vector3(UnityEngine.Random.Range(-8f, targetSpace[0]),
-                                           UnityEngine.Random.Range(-5f, targetSpace[1]),
-                                           0);
+            Vector3 randomTarget = new Vector3(Random.Range(-25f, 25),
+                                           0,
+                                           Random.Range(-25,25));
             Debug.Log(randomTarget + " target");
             _seek.Target = randomTarget;
-            yield return new WaitForSeconds(UnityEngine.Random.Range(targetChange[0], targetChange[1]));
+            yield return new WaitForSeconds(25);
         }
     }
 
     IEnumerator RandomAngle()
     {
-        while (_startRandom)
+        while(_startRandom)
         {
             Debug.Log("angle");
-            _rotationAngle = UnityEngine.Random.Range(angleRange[0], angleRange[1]);
-            yield return new WaitForSecondsRealtime(UnityEngine.Random.Range(angleChange[0], angleChange[1]));
+            _rotationAngle = Random.Range(angleRange[0], angleRange[1]);
+            yield return new WaitForSeconds(25);
         }
-
     }
 
     private void DrawVectors()
@@ -102,26 +74,4 @@ public class enemie : Steering
         Debug.DrawLine(cirlceP, cirlceP + displesment, Color.blue);
         Debug.DrawLine(transform.position, transform.position + wanderforce, Color.green);
     }
-
-
-    // Update is called once per frame
-    void Update()
-    {
-        if(isReady == true)
-        {
-            StartCoroutine(ShotsFired());
-        }
-    }
-
-    public IEnumerator ShotsFired()
-    {
-        isReady = false; 
-        Instantiate(prefab, right.transform);
-        Instantiate(prefab, left.transform);
-        //rg.AddForce(transform.position * 5 * 1000 * Time.deltaTime, ForceMode.Impulse);
-        yield return new WaitForSeconds(5);
-        isReady = true;
-    }
-
-
 }
