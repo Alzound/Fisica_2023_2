@@ -47,7 +47,7 @@ public class Wander : Steering
                                            Random.Range(-25,25));
             Debug.Log(randomTarget + " target");
             _seek.Target = randomTarget;
-            yield return new WaitForSeconds(25);
+            yield return new WaitForSeconds(15);
         }
     }
 
@@ -57,7 +57,7 @@ public class Wander : Steering
         {
             Debug.Log("angle");
             _rotationAngle = Random.Range(angleRange[0], angleRange[1]);
-            yield return new WaitForSeconds(25);
+            yield return new WaitForSeconds(15);
         }
     }
 
