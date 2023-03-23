@@ -1222,6 +1222,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1851101172, guid: 85c98d88d8fa00f40abc96b71e46526c, type: 3}
+      propertyPath: prefab
+      value: 
+      objectReference: {fileID: 2021349697399087053, guid: 21442d3312d89ef4c98a21c6d7b2fd90, type: 3}
+    - target: {fileID: 1851101172, guid: 85c98d88d8fa00f40abc96b71e46526c, type: 3}
+      propertyPath: explosionForceMagnitude
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 2855392421769176454, guid: 85c98d88d8fa00f40abc96b71e46526c, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -1270,5 +1278,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4627909530195798, guid: 85c98d88d8fa00f40abc96b71e46526c, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 85c98d88d8fa00f40abc96b71e46526c, type: 3}

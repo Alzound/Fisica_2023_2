@@ -44,7 +44,14 @@ public class shoot : MonoBehaviour
 
                 // Instantiate a particle system prefab at the point of collision
                 explosion.gameObject.SetActive(true);
+                StartCoroutine(Deactivate()); 
             }
         }
+    }
+
+    private IEnumerator Deactivate()
+    {
+        yield return new WaitForSeconds(2);
+        this.gameObject.SetActive(false);
     }
 }
