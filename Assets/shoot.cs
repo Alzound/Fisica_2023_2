@@ -29,11 +29,6 @@ public class shoot : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        
-    }
-
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Bullet"))
@@ -48,7 +43,7 @@ public class shoot : MonoBehaviour
                 rb.AddForce(direction.normalized * explosionForceMagnitude, ForceMode.Impulse);
 
                 // Instantiate a particle system prefab at the point of collision
-                Instantiate(explosion, contact.point, Quaternion.identity);
+                explosion.gameObject.SetActive(true);
             }
         }
     }
