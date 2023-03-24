@@ -74,11 +74,13 @@ public class Player_Manager : MonoBehaviour
         {
             Debug.Log("enter right");
             Instantiate(prefab, positionRight.transform.position, positionRight.transform.rotation);
+            rg.AddExplosionForce(1005, positionRight.transform.position, 10);
         }
         if (context.ReadValue<float>() <= -1)
         {
             Debug.Log("enter left");
             Instantiate(prefab, positionLeft.transform.position, positionLeft.transform.rotation);
+            rg.AddExplosionForce(1005, positionLeft.transform.position, 10);
         }
 
     }
